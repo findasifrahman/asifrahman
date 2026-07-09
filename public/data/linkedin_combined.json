@@ -317,6 +317,14 @@
       "company": "Independent Client Project",
       "skills": "Healthcare platform · Service UX · Content architecture · Lead generation",
       "project_link": "https://chinahealthcare.center/"
+    },
+    {
+      "title": "Zynq SoC based high-performance PCB design",
+      "details": "A significant FPGA and hardware engineering project built around a multilayer Zynq SoC board with high-speed routing, dense interfaces, and production-grade digital design considerations. This project demonstrates advanced PCB architecture, signal planning, and deep hardware execution.",
+      "time": "Advanced Hardware Project",
+      "company": "Independent Engineering Project",
+      "skills": "FPGA · Zynq · High-speed PCB · KiCad · Petalinux · Advanced Digital Hardware Design",
+      "project_link": "https://github.com/findasifrahman/zynq_soc_board_v1"
     }
   ],
   "skills": [

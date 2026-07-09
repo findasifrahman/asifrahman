@@ -16,9 +16,25 @@ import ScrollReveal from '../shared/ScrollReveal';
 
 const signatureProjects = [
   {
+    name: 'Zynq SoC FPGA Board',
+    category: 'Flagship FPGA + hardware design',
+    url: 'https://github.com/findasifrahman/zynq_soc_board_v1',
+    image: '/assets/img/products/advanced_pcb_zynq.png',
+    accent: 'linear-gradient(135deg, rgba(96,165,250,0.24), rgba(110,231,216,0.12))',
+    description:
+      'A significant high-performance FPGA project centered on a multilayer Zynq SoC PCB, dense routing, high-speed interfaces, and production-grade hardware decisions.',
+    stack: ['FPGA', 'Zynq', 'KiCad', 'High-speed PCB', 'Petalinux'],
+    notes: [
+      'One of my most significant engineering projects and a strong proof of advanced digital hardware capability.',
+      'Required careful signal integrity thinking, multilayer stack-up planning, and disciplined board architecture.',
+      'Important because it shows I can handle deep engineering work, not only software delivery.',
+    ],
+  },
+  {
     name: 'ChinaBuyBD Shopping',
     category: 'Cross-border ecommerce',
     url: 'https://www.chinabuybd.com/shopping',
+    image: '/assets/img/products/customProduct.jpg',
     accent: 'linear-gradient(135deg, rgba(110,231,216,0.28), rgba(16,185,129,0.12))',
     description:
       'A China-product ecommerce platform built for discovery, ordering, and operational flow across a cross-border sourcing business.',
@@ -33,6 +49,7 @@ const signatureProjects = [
     name: 'China Healthcare Center',
     category: 'Healthcare service platform',
     url: 'https://chinahealthcare.center/',
+    image: '/assets/img/products/saasERP.png',
     accent: 'linear-gradient(135deg, rgba(245,158,11,0.26), rgba(251,113,133,0.12))',
     description:
       'A trust-first platform for Bangladeshi patients seeking hospitals, doctors, visa support, and treatment coordination in China.',
@@ -47,6 +64,7 @@ const signatureProjects = [
     name: 'AutoSol GPS Platform',
     category: 'IoT + mobility software',
     url: 'https://www.intricatlab.com/',
+    image: '/assets/img/products/autosol.jpg',
     accent: 'linear-gradient(135deg, rgba(96,165,250,0.24), rgba(59,130,246,0.1))',
     description:
       'A live vehicle and asset tracking ecosystem spanning hardware integration, mobile apps, backend services, and web reporting.',
@@ -62,20 +80,13 @@ const signatureProjects = [
 const buildSignals = [
   'Complex business logic',
   'Multi-system integration',
+  'Advanced hardware and FPGA work',
   'Production deployment mindset',
-  'UI that supports trust and clarity',
 ];
 
 const SpecialProjectsSection = () => {
   return (
-    <Box
-      sx={{
-        py: 9,
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-      id="projects"
-    >
+    <Box sx={{ py: 9, position: 'relative', overflow: 'hidden' }} id="projects">
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <ScrollReveal>
           <Box sx={{ mb: 5 }}>
@@ -83,56 +94,67 @@ const SpecialProjectsSection = () => {
               SIGNATURE BUILDS
             </Typography>
             <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, mb: 1.5 }}>
-              Projects that show depth, not just variety
+              Flagship work with clearer visual hierarchy
             </Typography>
             <Typography sx={{ color: 'rgba(244,247,251,0.72)', maxWidth: '52rem', lineHeight: 1.8 }}>
-              I researched current portfolio inspiration patterns like curated card systems, editorial hierarchy,
-              and cleaner bento-style grouping, then used those ideas here to make the work feel more premium and
-              easier to scan. These projects are front and center because they demonstrate ownership of complex,
-              real-world software.
+              I reworked this area to feel more like real case studies: thumbnail-led, better aligned, and easier to
+              scan. Your FPGA project now leads the section as a standout engineering achievement.
             </Typography>
           </Box>
         </ScrollReveal>
 
         <Grid container spacing={3}>
           <Grid item xs={12} lg={8}>
-            <Grid container spacing={3}>
+            <Stack spacing={3}>
               {signatureProjects.map((project, index) => (
-                <Grid item xs={12} key={project.name}>
-                  <ScrollReveal>
-                    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }}>
-                      <Paper
-                        sx={{
-                          p: { xs: 3, md: 4 },
-                          borderRadius: '30px',
-                          background: 'linear-gradient(180deg, rgba(12,21,35,0.96) 0%, rgba(8,14,24,0.95) 100%)',
-                          border: '1px solid rgba(255,255,255,0.08)',
-                          boxShadow: '0 24px 70px rgba(0,0,0,0.24)',
-                          overflow: 'hidden',
-                          position: 'relative',
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            position: 'absolute',
-                            inset: 0,
-                            background: project.accent,
-                            opacity: 0.9,
-                            pointerEvents: 'none',
-                          }}
-                        />
-                        <Grid container spacing={3} sx={{ position: 'relative', zIndex: 1 }}>
-                          <Grid item xs={12} md={8}>
+                <ScrollReveal key={project.name}>
+                  <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }}>
+                    <Paper
+                      sx={{
+                        p: { xs: 2.2, md: 2.6 },
+                        borderRadius: '30px',
+                        background: 'linear-gradient(180deg, rgba(12,21,35,0.96) 0%, rgba(8,14,24,0.95) 100%)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        boxShadow: '0 24px 70px rgba(0,0,0,0.24)',
+                        overflow: 'hidden',
+                        position: 'relative',
+                      }}
+                    >
+                      <Box sx={{ position: 'absolute', inset: 0, background: project.accent, opacity: 0.9, pointerEvents: 'none' }} />
+                      <Grid container spacing={2.5} alignItems="stretch" sx={{ position: 'relative', zIndex: 1 }}>
+                        <Grid item xs={12} md={4}>
+                          <Box
+                            sx={{
+                              height: '100%',
+                              minHeight: { xs: 230, md: 320 },
+                              borderRadius: '24px',
+                              overflow: 'hidden',
+                              backgroundColor: 'rgba(255,255,255,0.04)',
+                              border: '1px solid rgba(255,255,255,0.08)',
+                            }}
+                          >
+                            <Box
+                              component="img"
+                              src={project.image}
+                              alt={project.name}
+                              sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                            />
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={12} md={5}>
+                          <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                             <Chip
                               label={project.category}
                               sx={{
+                                alignSelf: 'flex-start',
                                 mb: 2,
                                 color: '#f4f7fb',
                                 backgroundColor: 'rgba(255,255,255,0.08)',
                                 border: '1px solid rgba(255,255,255,0.12)',
                               }}
                             />
-                            <Typography variant="h3" sx={{ fontSize: { xs: '1.9rem', md: '2.35rem' }, mb: 1.5 }}>
+                            <Typography variant="h3" sx={{ fontSize: { xs: '1.9rem', md: '2.2rem' }, mb: 1.5 }}>
                               {project.name}
                             </Typography>
                             <Typography sx={{ color: 'rgba(244,247,251,0.78)', lineHeight: 1.85, mb: 2.5 }}>
@@ -158,49 +180,52 @@ const SpecialProjectsSection = () => {
                               rel="noopener noreferrer"
                               endIcon={<ArrowOutward />}
                               sx={{
+                                alignSelf: 'flex-start',
                                 color: '#04111f',
                                 px: 2.4,
                                 py: 1.1,
                                 borderRadius: '999px',
                                 backgroundColor: '#f4f7fb',
-                                '&:hover': {
-                                  backgroundColor: '#ffffff',
-                                },
+                                '&:hover': { backgroundColor: '#ffffff' },
                               }}
                             >
                               Visit Project
                             </Button>
-                          </Grid>
-
-                          <Grid item xs={12} md={4}>
-                            <Paper
-                              sx={{
-                                p: 2.5,
-                                height: '100%',
-                                borderRadius: '22px',
-                                backgroundColor: 'rgba(5,11,20,0.4)',
-                                border: '1px solid rgba(255,255,255,0.08)',
-                              }}
-                            >
-                              <Typography sx={{ color: '#dffcf8', fontWeight: 800, mb: 1.6 }}>
-                                Why it matters
-                              </Typography>
-                              <Stack spacing={1.4}>
-                                {project.notes.map((note) => (
-                                  <Typography key={note} sx={{ color: 'rgba(244,247,251,0.74)', lineHeight: 1.7 }}>
-                                    {note}
-                                  </Typography>
-                                ))}
-                              </Stack>
-                            </Paper>
-                          </Grid>
+                          </Box>
                         </Grid>
-                      </Paper>
-                    </motion.div>
-                  </ScrollReveal>
-                </Grid>
+
+                        <Grid item xs={12} md={3}>
+                          <Paper
+                            sx={{
+                              p: 2.2,
+                              height: '100%',
+                              minHeight: { md: 320 },
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              borderRadius: '22px',
+                              backgroundColor: 'rgba(5,11,20,0.4)',
+                              border: '1px solid rgba(255,255,255,0.08)',
+                            }}
+                          >
+                            <Typography sx={{ color: '#dffcf8', fontWeight: 800, mb: 1.6 }}>
+                              Why it matters
+                            </Typography>
+                            <Stack spacing={1.4}>
+                              {project.notes.map((note) => (
+                                <Typography key={note} sx={{ color: 'rgba(244,247,251,0.74)', lineHeight: 1.7 }}>
+                                  {note}
+                                </Typography>
+                              ))}
+                            </Stack>
+                          </Paper>
+                        </Grid>
+                      </Grid>
+                    </Paper>
+                  </motion.div>
+                </ScrollReveal>
               ))}
-            </Grid>
+            </Stack>
           </Grid>
 
           <Grid item xs={12} lg={4}>
@@ -221,8 +246,8 @@ const SpecialProjectsSection = () => {
                     I can own complex builds from idea to launch.
                   </Typography>
                   <Typography sx={{ color: 'rgba(244,247,251,0.72)', lineHeight: 1.75 }}>
-                    These case studies are here to make one point clear: I am comfortable shipping work that
-                    mixes product design, engineering decisions, integrations, content structure, and deployment.
+                    The portfolio should make that obvious at a glance, so the strongest software and hardware work
+                    now has more visual weight, clearer imagery, and better balance.
                   </Typography>
                 </Paper>
 
