@@ -1,159 +1,98 @@
-import React, { useState } from 'react';
-import { Box, Container, Grid, Card, CardContent, CardMedia, Typography, Chip, IconButton, Link, CircularProgress, Alert, Button } from '@mui/material';
-import { Launch } from '@mui/icons-material';
+import React, { useMemo, useState } from 'react';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { ArrowOutward } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useData } from '../../context/DataContext';
 
+const parseSkills = (skills = '') =>
+  skills
+    .replaceAll('Â·', '|')
+    .split('|')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
 const ProjectCard = ({ project }) => {
   const [expanded, setExpanded] = useState(false);
-  const maxLength = 100;
-  const shouldTruncate = project.details?.length > maxLength;
-  const displayText = shouldTruncate && !expanded 
-    ? `${project.details.substring(0, maxLength)}...` 
-    : project.details;
+  const text = project.details || 'Production project delivered across multiple technical layers.';
+  const shouldTruncate = text.length > 180;
+  const displayText = shouldTruncate && !expanded ? `${text.slice(0, 180)}...` : text;
+  const skills = parseSkills(project.skills);
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <Card 
-        sx={{ 
-          height: '100%', 
-          display: 'flex', 
-          flexDirection: 'column',
-          background: 'rgba(255, 255, 255, 0.05)',
-          backdropFilter: 'blur(10px)',
-          borderRadius: 2,
-          overflow: 'hidden',
-          transition: 'all 0.3s',
-          '&:hover': {
-            background: 'rgba(255, 255, 255, 0.1)',
-            transform: 'translateY(-4px)'
-          }
+    <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.2 }}>
+      <Card
+        sx={{
+          height: '100%',
+          borderRadius: '28px',
+          background: 'linear-gradient(180deg, rgba(16,27,43,0.96) 0%, rgba(8,14,24,0.94) 100%)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 24px 70px rgba(0,0,0,0.2)',
         }}
       >
-        {project.imageUrl && (
-          <Box sx={{ position: 'relative', paddingTop: '56.25%' }}>
-            <CardMedia
-              component="img"
-              image={project.imageUrl}
-              alt={project.title}
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                transition: 'transform 0.3s',
-                '&:hover': {
-                  transform: 'scale(1.05)'
-                }
-              }}
-            />
-          </Box>
-        )}
-        <CardContent sx={{ 
-          flexGrow: 1, 
-          p: 3,
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%'
-        }}>
-          <Typography 
-            variant="h5" 
-            gutterBottom 
-            sx={{ 
-              color: '#fff', 
-              fontWeight: 'bold',
-              minHeight: '2.5em'
-            }}
-          >
+        <CardContent sx={{ p: 3.2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Typography sx={{ color: '#6ee7d8', fontWeight: 800, letterSpacing: '0.06em', mb: 1 }}>
+            {project.company || 'Independent build'}
+          </Typography>
+          <Typography variant="h5" sx={{ mb: 1.25, minHeight: '3.2rem' }}>
             {project.title}
           </Typography>
-          <Box sx={{ 
-            flexGrow: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '8em'
-          }}>
-            <Typography 
-              variant="body1" 
-              sx={{ 
-                color: '#90caf9', 
-                mb: 2,
-                flexGrow: 1
-              }}
+          <Typography sx={{ color: 'rgba(244,247,251,0.7)', lineHeight: 1.8, mb: 2.5 }}>
+            {displayText}
+          </Typography>
+          {shouldTruncate && (
+            <Button
+              onClick={() => setExpanded((value) => !value)}
+              sx={{ alignSelf: 'flex-start', color: '#f59e0b', mb: 2, p: 0 }}
             >
-              {displayText}
-              {shouldTruncate && (
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setExpanded(!expanded);
-                  }}
-                  sx={{
-                    color: '#64b5f6',
-                    p: 0,
-                    minWidth: 'auto',
-                    ml: 1,
-                    '&:hover': {
-                      background: 'none',
-                      color: '#90caf9'
-                    }
-                  }}
-                >
-                  {expanded ? 'Show Less' : 'Read More'}
-                </Button>
-              )}
-            </Typography>
-          </Box>
-          <Box sx={{ mb: 3 }}>
-            {project.skills?.split('·').map((skill, index) => (
-              <Chip
-                key={index}
-                label={skill.trim()}
-                size="small"
+              {expanded ? 'Show less' : 'Read more'}
+            </Button>
+          )}
+
+          <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 3 }}>
+            {skills.slice(0, 6).map((skill) => (
+              <Box
+                key={skill}
                 sx={{
-                  mr: 1,
-                  mb: 1,
-                  backgroundColor: 'rgba(144, 202, 249, 0.2)',
-                  color: '#fff',
-                  '&:hover': {
-                    backgroundColor: 'rgba(144, 202, 249, 0.3)'
-                  }
+                  px: 1.2,
+                  py: 0.7,
+                  borderRadius: '999px',
+                  color: '#f4f7fb',
+                  fontSize: '0.82rem',
+                  backgroundColor: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.08)',
                 }}
-              />
+              >
+                {skill}
+              </Box>
             ))}
-          </Box>
-          <Box sx={{ 
-            mt: 'auto', 
-            display: 'flex', 
-            justifyContent: 'space-between',
-            alignItems: 'center' 
-          }}>
-            <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-              {project.time}
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              {project.project_link && (
-                <IconButton
-                  component={Link}
-                  href={project.project_link}
-                  target="_blank"
-                  size="small"
-                  sx={{ 
-                    color: '#90caf9',
-                    '&:hover': {
-                      color: '#64b5f6'
-                    }
-                  }}
-                >
-                  <Launch />
-                </IconButton>
-              )}
-            </Box>
+          </Stack>
+
+          <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'space-between', gap: 2, alignItems: 'center' }}>
+            <Typography sx={{ color: 'rgba(244,247,251,0.58)', fontSize: '0.92rem' }}>{project.time}</Typography>
+            {project.project_link && (
+              <Button
+                component={Link}
+                href={project.project_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                endIcon={<ArrowOutward />}
+                sx={{ color: '#f4f7fb' }}
+              >
+                View
+              </Button>
+            )}
           </Box>
         </CardContent>
       </Card>
@@ -163,6 +102,8 @@ const ProjectCard = ({ project }) => {
 
 const ProjectsSection = () => {
   const { data, loading, error } = useData();
+
+  const projects = useMemo(() => data?.linkedin?.projects || [], [data]);
 
   if (loading) {
     return (
@@ -180,61 +121,23 @@ const ProjectsSection = () => {
     );
   }
 
-  // Use only the projects from the data context
-  const projects = data?.linkedin?.projects || [];
-
   return (
-    <Box
-      sx={{
-        py: 8,
-        background: '#000',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      {/* Background Pattern */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)',
-          backgroundSize: '40px 40px',
-          opacity: 0.1,
-          zIndex: 0
-        }}
-      />
-      
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        <Typography 
-          variant="h2" 
-          component="h2" 
-          align="center" 
-          gutterBottom
-          sx={{
-            mb: 6,
-            color: '#fff',
-            fontWeight: 'bold',
-            background: 'linear-gradient(45deg,rgb(249, 144, 223), #cc3322)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            color: 'transparent',
-          }}
-        >
-          Featured Projects
-        </Typography>
+    <Box sx={{ py: 9, position: 'relative', overflow: 'hidden' }}>
+      <Container maxWidth="lg">
+        <Box sx={{ mb: 5 }}>
+          <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, mb: 1.5 }}>
+            Selected Project Archive
+          </Typography>
+          <Typography sx={{ color: 'rgba(244,247,251,0.72)', maxWidth: '50rem', lineHeight: 1.8 }}>
+            A broader look at product, AI, hardware-adjacent, and internal platform work. These projects add
+            range, while the signature builds above highlight the strongest proof of depth and delivery.
+          </Typography>
+        </Box>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           {projects.map((project, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
+            <Grid item key={`${project.title}-${index}`} xs={12} sm={6} lg={4}>
+              <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.06 }}>
                 <ProjectCard project={project} />
               </motion.div>
             </Grid>
@@ -245,4 +148,4 @@ const ProjectsSection = () => {
   );
 };
 
-export default ProjectsSection; 
+export default ProjectsSection;

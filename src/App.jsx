@@ -27,14 +27,49 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#2196f3',
+      main: '#6ee7d8',
     },
     secondary: {
-      main: '#f50057',
+      main: '#f59e0b',
     },
     background: {
-      default: '#121212',
-      paper: '#1e1e1e',
+      default: '#07111f',
+      paper: '#0f1b2d',
+    },
+    text: {
+      primary: '#f4f7fb',
+      secondary: 'rgba(244, 247, 251, 0.72)',
+    },
+  },
+  typography: {
+    fontFamily: '"Manrope", "Segoe UI", sans-serif',
+    h1: {
+      fontFamily: '"Space Grotesk", "Segoe UI", sans-serif',
+      fontWeight: 700,
+    },
+    h2: {
+      fontFamily: '"Space Grotesk", "Segoe UI", sans-serif',
+      fontWeight: 700,
+    },
+    h3: {
+      fontFamily: '"Space Grotesk", "Segoe UI", sans-serif',
+      fontWeight: 700,
+    },
+    h4: {
+      fontFamily: '"Space Grotesk", "Segoe UI", sans-serif',
+      fontWeight: 700,
+    },
+    h5: {
+      fontFamily: '"Space Grotesk", "Segoe UI", sans-serif',
+      fontWeight: 700,
+    },
+    h6: {
+      fontFamily: '"Space Grotesk", "Segoe UI", sans-serif',
+      fontWeight: 700,
+    },
+    button: {
+      textTransform: 'none',
+      fontWeight: 700,
     },
   },
 });

@@ -1,338 +1,265 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
-  Container,
-  Typography,
-  Grid,
   Button,
-  IconButton,
-  useTheme,
-  useMediaQuery
+  Chip,
+  Container,
+  Grid,
+  Link,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material';
-import { ChevronLeft, ChevronRight, Launch, ExpandMore, ExpandLess } from '@mui/icons-material';
+import { ArrowOutward } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../shared/ScrollReveal';
 
-const specialProjects = [
+const signatureProjects = [
   {
-    title: "AutoSol GPS based vehicle, asset Tracking solution",
-    details: "AutoSol is an application to track and control vehicles remotely. AutoSol can connect with Concox devices and provide location on map, notification for over speed, driver behaviour in both Android and iOS mobile. AutoSol also provides a web application where user can view reports of fuel consumption and mileage. AutoSol can also be used to control the device engine. AutoSol is hosted in Amazon EC2 instance. Integration with hardware alongside mobile and web app is fully developed by me. AutoSol app is available in Play Store for free.",
-    images: [
-      "/assets/img/products/autosol/autosol_2.jpg",
-      "/assets/img/products/autosol/autosol_1.jpg",
-      "/assets/img/products/autosol/autosol_3.jpg",
-      "/assets/img/products/autosol/autosol_4.jpg",
-      "/assets/img/products/autosol/autosol_5.jpg",
-      "/assets/img/products/autosol/autosol_6.jpg",
-      "/assets/img/products/autosol/autosol_7.jpg",
-      "/assets/img/products/autosol/autosol_8.jpg",
-      "/assets/img/products/autosol/autosol_9.jpg",
-      "/assets/img/products/autosol/autosol_10.jpg"
+    name: 'ChinaBuyBD Shopping',
+    category: 'Cross-border ecommerce',
+    url: 'https://www.chinabuybd.com/shopping',
+    accent: 'linear-gradient(135deg, rgba(110,231,216,0.28), rgba(16,185,129,0.12))',
+    description:
+      'A China-product ecommerce platform built for discovery, ordering, and operational flow across a cross-border sourcing business.',
+    stack: ['PostgreSQL', 'Vue', 'Node.js', 'Python', 'Ecommerce platform'],
+    notes: [
+      'Built to support complex catalog and product browsing workflows.',
+      'Combines a customer-facing shopping experience with the operational logic needed for cross-border commerce.',
+      'Shows my ability to deliver product architecture, backend workflows, and polished UI in one system.',
     ],
-    link: "https://www.intricatlab.com/"
   },
   {
-    title: "Radio Frequency(RF) communication device design",
-    details: "TMS (Tactical Messaging System) is a radio communication device capable to pass peer to peer short message and provide real time location of each connected node using UHF band frequency. This is used in Marine environment for live saving communication. The device includes radio communication IC and uses single board computer for user interface. The device is developed to run in completely offline marine environment. The hardware design, amplifier, microcontroller and software user interface all are Developed solely by me. Bangladesh Coast guard already using the device successfully for over a year in marine environment.",
-    images: [
-      "/assets/img/products/uhf/uhf_3.png",
-      "/assets/img/products/uhf/uhf_4.png",
-      "/assets/img/products/uhf/uhf_1.png",
-      "/assets/img/products/uhf/uhf_2.jpg"
+    name: 'China Healthcare Center',
+    category: 'Healthcare service platform',
+    url: 'https://chinahealthcare.center/',
+    accent: 'linear-gradient(135deg, rgba(245,158,11,0.26), rgba(251,113,133,0.12))',
+    description:
+      'A trust-first platform for Bangladeshi patients seeking hospitals, doctors, visa support, and treatment coordination in China.',
+    stack: ['Service platform', 'Lead generation', 'Content architecture', 'Patient journey UX'],
+    notes: [
+      'Designed for a high-trust service context where clarity and reassurance matter as much as visual design.',
+      'Balances content, conversion, and support pathways for a medically sensitive audience.',
+      'Highlights my ability to shape business-focused platforms, not just technical demos.',
     ],
-    link: "https://www.linkedin.com/posts/asifrahman10018_bijoy-50-tactical-messaging-system-radio-activity-7178334044256972801-5Gb3"
   },
   {
-    title: "Zynq SoC based high-performance PCB design",
-    details: "zues high-performance PCB is a 10-layer Zynq SoC board built with KiCad-8 and can be loaded petalinix!This compact board is packed with robust features:LPDDR3 RAM (implemented with multiple mtk fly-by routing)8GB eMMC storage, Gigabit Ethernet,High-Speed USB, Dual HDMI Interfaces, This project was both challenging and rewarding, pushing my design skills to the next level. I'm thrilled about the outcome and eager to connect with fellow professionals, enthusiasts, or companies interested in innovative hardware design",
-    images: [
-      "/assets/img/products/zynq/zynq_1.png",
-      "/assets/img/products/zynq/zynq_2.png",
-      "/assets/img/products/zynq/zynq_3.png"
+    name: 'AutoSol GPS Platform',
+    category: 'IoT + mobility software',
+    url: 'https://www.intricatlab.com/',
+    accent: 'linear-gradient(135deg, rgba(96,165,250,0.24), rgba(59,130,246,0.1))',
+    description:
+      'A live vehicle and asset tracking ecosystem spanning hardware integration, mobile apps, backend services, and web reporting.',
+    stack: ['Mobile apps', 'Node.js', 'Tracking infrastructure', 'Telemetry'],
+    notes: [
+      'Integrated hardware, location intelligence, reports, alerts, and control features.',
+      'Built for day-to-day operational use rather than portfolio-only presentation.',
+      'A strong example of product breadth across device, cloud, and user interfaces.',
     ],
-    link: "https://github.com/findasifrahman/zynq_soc_board_v1"
   },
-  {
-    title: "CML Microsystems baseband RF radio design",
-    details: "The CMX994 is a family of direct conversion receiver ICs for greater DMR conversion RF radio design. I successfully designed the PCB for the device using KiCad. The PCB is a 4 layer board with a 100MHz crystal oscillator and a 12.288MHz crystal oscillator. The PCB is designed to be used in a 5G radio system",
-    images: [
-      "/assets/img/products/sicomm/sicomm_1.png",
-      "/assets/img/products/sicomm/sicomm_2.png"
-    ],
-    link: "#"
-  },
-  {
-    title: "STM32 based development board",
-    details: "This is a development board for the STM32 microcontroller. The board is a 4 layer board with a 100MHz crystal oscillator and a 12.288MHz crystal oscillator. ",
-    images: [
-      "/assets/img/products/stm32/stm32_1.png",
-      "/assets/img/products/stm32/stm32_2.png"
-    ],
-    link: "https://wa.me/+8801700802868"
-  },
-  {
-    title: "Production AI agent for whatsapp lead generation",
-    details: "AI-driven education advisory platform (multi-intake, multi-degree, scholarship logic): Developed an AI agent integrated with WhatsApp to assist prospective students in selecting suitable degree programs based on their preferences and qualifications. The agent utilizes natural language processing to understand user queries and provides personalized recommendations, including scholarship opportunities. Built using Node.js, Python, and OpenAI's GPT-4 API, the system is deployed on VPS",
-    images: [
-      "/assets/img/products/ai_agent_malishaedu/1.png",
-      "/assets/img/products/ai_agent_malishaedu/2.png"
-    ],
-    link: "https://wa.me/+8801700802868"
-  },
-  {
-    title: "VPN Router & PCB with OpenWRT and mt76xx from mediatek",
-    details: "Wemey is a WiFi based home automation device to control light, fan, AC in smart home system with smartphone. I developed the hardware and software for the device using ESP32 microcontroller and ESP_IDF. I also developed the mobile app for the device using JAVA. I also developed the PCB using kicad. Our IOT productline also includes fingerprint recognition system. I developed the fingerprint recognition software . I also developed the PCB using kicad. Our IOT productline also includes fingerprint recognition system and NODE-RED based automation system.",
-    images: [
-      "/assets/img/products/iot/iot_1.jpg",
-      "/assets/img/products/iot/iot_2.png",
-      "/assets/img/products/iot/iot_3.jpg"
-    ],
-    link: "https://github.com/findasifrahman/mt76--"
-  }
 ];
 
-const ProjectDetails = ({ details }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const theme = useTheme();
-
-  const firstFiftyWords = details.split(' ').slice(0, 50).join(' ') + '...';
-  const shouldShowReadMore = details.split(' ').length > 50;
-
-  return (
-    <Box>
-      <Typography
-        variant="body1"
-        paragraph
-        sx={{
-          color: 'rgba(255,255,255,0.8)',
-          mb: shouldShowReadMore ? 2 : 3,
-          textAlign: 'justify',
-          textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-          transform: 'translateZ(20px)',
-          perspective: '1000px',
-          transformStyle: 'preserve-3d'
-        }}
-      >
-        {isExpanded ? details : firstFiftyWords}
-      </Typography>
-      {shouldShowReadMore && (
-        <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          endIcon={isExpanded ? <ExpandLess /> : <ExpandMore />}
-          sx={{
-            color: '#90caf9',
-            textTransform: 'none',
-            '&:hover': {
-              backgroundColor: 'rgba(144, 202, 249, 0.1)'
-            }
-          }}
-        >
-          {isExpanded ? 'Read Less' : 'Read More'}
-        </Button>
-      )}
-    </Box>
-  );
-};
-
-const ImageCarousel = ({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  return (
-    <Box 
-      sx={{ 
-        position: 'relative', 
-        width: '100%', 
-        height: isMobile ? '300px' : '400px',
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
-    >
-      <motion.img
-        key={currentIndex}
-        src={images[currentIndex]}
-        alt={`Project image ${currentIndex + 1}`}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.8 }}
-        transition={{ duration: 0.3 }}
-        style={{
-          maxWidth: '100%',
-          maxHeight: '100%',
-          width: 'auto',
-          height: 'auto',
-          objectFit: 'contain',
-          borderRadius: '12px'
-        }}
-      />
-      {images.length > 1 && (
-        <>
-          <IconButton
-            onClick={handlePrevious}
-            sx={{
-              position: 'absolute',
-              left: 8,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              backgroundColor: 'rgba(255,255,255,0.2)',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.3)'
-              }
-            }}
-          >
-            <ChevronLeft sx={{ color: 'white' }} />
-          </IconButton>
-          <IconButton
-            onClick={handleNext}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              backgroundColor: 'rgba(255,255,255,0.2)',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.3)'
-              }
-            }}
-          >
-            <ChevronRight sx={{ color: 'white' }} />
-          </IconButton>
-        </>
-      )}
-    </Box>
-  );
-};
+const buildSignals = [
+  'Complex business logic',
+  'Multi-system integration',
+  'Production deployment mindset',
+  'UI that supports trust and clarity',
+];
 
 const SpecialProjectsSection = () => {
   return (
-    <Box 
-      sx={{ 
-        py: 8,
-        background: '#000',
+    <Box
+      sx={{
+        py: 9,
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
       id="projects"
     >
-      {/* Background Pattern */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)',
-          backgroundSize: '40px 40px',
-          opacity: 0.1,
-          zIndex: 0
-        }}
-      />
-      
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        <Typography 
-          variant="h2" 
-          component="h2" 
-          align="center" 
-          gutterBottom
-          sx={{
-            mb: 8,
-            color: '#fff',
-            fontWeight: 'bold',
-            textShadow: '0 4px 8px rgba(0,0,0,0.5)',
-            transform: 'translateZ(30px)',
-            perspective: '1000px',
-            transformStyle: 'preserve-3d',
-            background: 'linear-gradient(45deg,rgb(249, 144, 223), #cc3322)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            color: 'transparent',
-          }}
-        >
-          Special Projects
-        </Typography>
+        <ScrollReveal>
+          <Box sx={{ mb: 5 }}>
+            <Typography sx={{ color: '#6ee7d8', fontWeight: 800, letterSpacing: '0.08em', mb: 1.5 }}>
+              SIGNATURE BUILDS
+            </Typography>
+            <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, mb: 1.5 }}>
+              Projects that show depth, not just variety
+            </Typography>
+            <Typography sx={{ color: 'rgba(244,247,251,0.72)', maxWidth: '52rem', lineHeight: 1.8 }}>
+              I researched current portfolio inspiration patterns like curated card systems, editorial hierarchy,
+              and cleaner bento-style grouping, then used those ideas here to make the work feel more premium and
+              easier to scan. These projects are front and center because they demonstrate ownership of complex,
+              real-world software.
+            </Typography>
+          </Box>
+        </ScrollReveal>
 
-        {specialProjects.map((project, index) => (
-          <ScrollReveal key={index}>
-            <Grid 
-              container 
-              spacing={4} 
-              alignItems="center"
-              sx={{ 
-                mb: 12,
-                mt: index === 0 ? 0 : 8,
-                '&:last-child': { mb: 0 }
-              }}
-            >
-              <Grid item xs={12} md={6}>
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Typography
-                    variant="h4"
-                    component="h3"
-                    gutterBottom
-                    sx={{
-                      color: '#90caf9',
-                      fontWeight: 'bold',
-                      textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                      transform: 'translateZ(20px)',
-                      perspective: '1000px',
-                      transformStyle: 'preserve-3d'
-                    }}
-                  >
-                    {project.title}
-                  </Typography>
-                  <ProjectDetails details={project.details} />
-                  <Button
-                    variant="outlined"
-                    endIcon={<Launch />}
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: '#90caf9',
-                      borderColor: '#90caf9',
-                      '&:hover': {
-                        borderColor: '#64b5f6',
-                        backgroundColor: 'rgba(144, 202, 249, 0.1)'
-                      }
-                    }}
-                  >
-                    View Project
-                  </Button>
-                </motion.div>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <ImageCarousel images={project.images} />
-                </motion.div>
-              </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={12} lg={8}>
+            <Grid container spacing={3}>
+              {signatureProjects.map((project, index) => (
+                <Grid item xs={12} key={project.name}>
+                  <ScrollReveal>
+                    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }}>
+                      <Paper
+                        sx={{
+                          p: { xs: 3, md: 4 },
+                          borderRadius: '30px',
+                          background: 'linear-gradient(180deg, rgba(12,21,35,0.96) 0%, rgba(8,14,24,0.95) 100%)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          boxShadow: '0 24px 70px rgba(0,0,0,0.24)',
+                          overflow: 'hidden',
+                          position: 'relative',
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: project.accent,
+                            opacity: 0.9,
+                            pointerEvents: 'none',
+                          }}
+                        />
+                        <Grid container spacing={3} sx={{ position: 'relative', zIndex: 1 }}>
+                          <Grid item xs={12} md={8}>
+                            <Chip
+                              label={project.category}
+                              sx={{
+                                mb: 2,
+                                color: '#f4f7fb',
+                                backgroundColor: 'rgba(255,255,255,0.08)',
+                                border: '1px solid rgba(255,255,255,0.12)',
+                              }}
+                            />
+                            <Typography variant="h3" sx={{ fontSize: { xs: '1.9rem', md: '2.35rem' }, mb: 1.5 }}>
+                              {project.name}
+                            </Typography>
+                            <Typography sx={{ color: 'rgba(244,247,251,0.78)', lineHeight: 1.85, mb: 2.5 }}>
+                              {project.description}
+                            </Typography>
+                            <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 3 }}>
+                              {project.stack.map((item) => (
+                                <Chip
+                                  key={item}
+                                  label={item}
+                                  sx={{
+                                    color: '#f4f7fb',
+                                    backgroundColor: 'rgba(7,17,31,0.34)',
+                                    border: '1px solid rgba(255,255,255,0.08)',
+                                  }}
+                                />
+                              ))}
+                            </Stack>
+                            <Button
+                              component={Link}
+                              href={project.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              endIcon={<ArrowOutward />}
+                              sx={{
+                                color: '#04111f',
+                                px: 2.4,
+                                py: 1.1,
+                                borderRadius: '999px',
+                                backgroundColor: '#f4f7fb',
+                                '&:hover': {
+                                  backgroundColor: '#ffffff',
+                                },
+                              }}
+                            >
+                              Visit Project
+                            </Button>
+                          </Grid>
+
+                          <Grid item xs={12} md={4}>
+                            <Paper
+                              sx={{
+                                p: 2.5,
+                                height: '100%',
+                                borderRadius: '22px',
+                                backgroundColor: 'rgba(5,11,20,0.4)',
+                                border: '1px solid rgba(255,255,255,0.08)',
+                              }}
+                            >
+                              <Typography sx={{ color: '#dffcf8', fontWeight: 800, mb: 1.6 }}>
+                                Why it matters
+                              </Typography>
+                              <Stack spacing={1.4}>
+                                {project.notes.map((note) => (
+                                  <Typography key={note} sx={{ color: 'rgba(244,247,251,0.74)', lineHeight: 1.7 }}>
+                                    {note}
+                                  </Typography>
+                                ))}
+                              </Stack>
+                            </Paper>
+                          </Grid>
+                        </Grid>
+                      </Paper>
+                    </motion.div>
+                  </ScrollReveal>
+                </Grid>
+              ))}
             </Grid>
-          </ScrollReveal>
-        ))}
+          </Grid>
+
+          <Grid item xs={12} lg={4}>
+            <ScrollReveal delay={0.12}>
+              <Stack spacing={3}>
+                <Paper
+                  sx={{
+                    p: 3,
+                    borderRadius: '28px',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                  }}
+                >
+                  <Typography sx={{ color: '#f59e0b', fontWeight: 800, letterSpacing: '0.08em', mb: 1.25 }}>
+                    WHAT THIS SHOWS
+                  </Typography>
+                  <Typography variant="h5" sx={{ mb: 1.5 }}>
+                    I can own complex builds from idea to launch.
+                  </Typography>
+                  <Typography sx={{ color: 'rgba(244,247,251,0.72)', lineHeight: 1.75 }}>
+                    These case studies are here to make one point clear: I am comfortable shipping work that
+                    mixes product design, engineering decisions, integrations, content structure, and deployment.
+                  </Typography>
+                </Paper>
+
+                <Paper
+                  sx={{
+                    p: 3,
+                    borderRadius: '28px',
+                    background: 'linear-gradient(180deg, rgba(15,27,45,0.94) 0%, rgba(8,15,28,0.92) 100%)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                  }}
+                >
+                  <Typography sx={{ color: '#6ee7d8', fontWeight: 800, letterSpacing: '0.08em', mb: 2 }}>
+                    DELIVERY SIGNALS
+                  </Typography>
+                  <Stack spacing={1.2}>
+                    {buildSignals.map((item) => (
+                      <Box
+                        key={item}
+                        sx={{
+                          p: 1.6,
+                          borderRadius: '18px',
+                          backgroundColor: 'rgba(255,255,255,0.04)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                        }}
+                      >
+                        <Typography sx={{ color: 'rgba(244,247,251,0.78)' }}>{item}</Typography>
+                      </Box>
+                    ))}
+                  </Stack>
+                </Paper>
+              </Stack>
+            </ScrollReveal>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );
 };
 
-export default SpecialProjectsSection; 
+export default SpecialProjectsSection;

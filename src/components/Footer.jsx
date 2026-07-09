@@ -2,103 +2,53 @@ import React from 'react';
 import {
   Box,
   Container,
-  Typography,
   IconButton,
   Link,
+  Typography,
+  useMediaQuery,
   useTheme,
-  useMediaQuery
 } from '@mui/material';
 import {
+  Email as EmailIcon,
   GitHub as GitHubIcon,
   LinkedIn as LinkedInIcon,
   YouTube as YouTubeIcon,
-  Email as EmailIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+
+const socialLinks = [
+  { name: 'GitHub', icon: <GitHubIcon />, url: 'https://github.com/findasifrahman' },
+  { name: 'LinkedIn', icon: <LinkedInIcon />, url: 'https://bd.linkedin.com/in/AsifRahman18' },
+  { name: 'YouTube', icon: <YouTubeIcon />, url: 'https://www.youtube.com/channel/UCztj8CCuOJ0xuyIL5wzmbsw' },
+  { name: 'Email', icon: <EmailIcon />, url: 'mailto:asifrahman10018@gmail.com' },
+];
 
 const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const socialLinks = [
-    {
-      name: 'GitHub',
-      icon: <GitHubIcon />,
-      url: 'https://github.com/yourusername',
-      color: '#333'
-    },
-    {
-      name: 'LinkedIn',
-      icon: <LinkedInIcon />,
-      url: 'https://linkedin.com/in/yourusername',
-      color: '#0077b5'
-    },
-    {
-      name: 'YouTube',
-      icon: <YouTubeIcon />,
-      url: 'https://youtube.com/yourchannel',
-      color: '#ff0000'
-    },
-    {
-      name: 'Email',
-      icon: <EmailIcon />,
-      url: 'mailto:your.email@example.com',
-      color: '#ea4335'
-    }
-  ];
-
   return (
-    <Box
-      component="footer"
-      sx={{
-        py: 6,
-        px: 2,
-        mt: 'auto',
-        backgroundColor: '#000',
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-    >
-      {/* Background Pattern */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)',
-          backgroundSize: '40px 40px',
-          opacity: 0.1,
-          zIndex: 0
-        }}
-      />
-
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+    <Box component="footer" sx={{ py: 6, px: 2, mt: 'auto', color: 'white' }}>
+      <Container maxWidth="lg">
         <Box
           sx={{
+            p: 3,
+            borderRadius: '28px',
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: 3
+            gap: 3,
           }}
         >
-          {/* Social Links */}
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 2,
-              flexWrap: 'wrap',
-              justifyContent: 'center'
-            }}
-          >
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
             {socialLinks.map((link, index) => (
               <motion.div
                 key={link.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.08 }}
               >
                 <IconButton
                   component={Link}
@@ -107,12 +57,12 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   sx={{
                     color: 'white',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    backgroundColor: 'rgba(255,255,255,0.08)',
                     '&:hover': {
-                      backgroundColor: 'rgba(255,255,255,0.2)',
-                      transform: 'translateY(-2px)'
+                      backgroundColor: 'rgba(255,255,255,0.14)',
+                      transform: 'translateY(-2px)',
                     },
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
                   }}
                 >
                   {link.icon}
@@ -121,16 +71,17 @@ const Footer = () => {
             ))}
           </Box>
 
-          {/* Copyright */}
           <Typography
             variant="body2"
             align="center"
             sx={{
               color: 'rgba(255,255,255,0.7)',
-              fontSize: isMobile ? '0.75rem' : '0.875rem'
+              fontSize: isMobile ? '0.75rem' : '0.9rem',
+              maxWidth: '42rem',
             }}
           >
-            © {new Date().getFullYear()} Md Asifur Rahman. All rights reserved.
+            Copyright {new Date().getFullYear()} Md Asifur Rahman. Portfolio focused on complex software,
+            embedded systems, and product delivery.
           </Typography>
         </Box>
       </Container>
@@ -138,4 +89,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

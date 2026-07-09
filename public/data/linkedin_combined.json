@@ -301,6 +301,22 @@
       "company": "Intricate Lab ",
       "skills": "Python  · Angular · Microsoft Azure · Azure Functions · Flask · SQL ",
       "project_link": "https://github.com/findasifrahman/tiny-erp-backend"
+    },
+    {
+      "title": "ChinaBuyBD Shopping",
+      "details": "A cross-border ecommerce platform for China products built with PostgreSQL, Vue, Node.js, and Python. The project combines customer-facing shopping flows with business logic needed for sourcing, catalog management, and operational coordination.",
+      "time": "Recent Production Work",
+      "company": "Independent Client Project",
+      "skills": "PostgreSQL · Vue · Node.js · Python · Ecommerce platform",
+      "project_link": "https://www.chinabuybd.com/shopping"
+    },
+    {
+      "title": "China Healthcare Center",
+      "details": "A healthcare service platform that helps Bangladeshi patients connect with hospitals, doctors, visa support, and treatment coordination in China. The project focuses on trust, clear information architecture, and conversion-friendly service flows.",
+      "time": "Recent Production Work",
+      "company": "Independent Client Project",
+      "skills": "Healthcare platform · Service UX · Content architecture · Lead generation",
+      "project_link": "https://chinahealthcare.center/"
     }
   ],
   "skills": [

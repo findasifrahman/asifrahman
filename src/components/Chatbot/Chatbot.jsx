@@ -37,13 +37,6 @@ const Chatbot = () => {
   const { data } = useData();
   const [isMinimized, setIsMinimized] = useState(false);
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };

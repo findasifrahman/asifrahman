@@ -75,12 +75,21 @@ const Navbar = () => {
     <AppBar
       position="fixed"
       sx={{
-        background: scrolled ? 'rgba(18, 18, 18, 0.9)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(10px)' : 'none',
-        boxShadow: scrolled ? 1 : 0,
+        background: scrolled ? 'rgba(7, 17, 31, 0.76)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(18px)' : 'none',
+        boxShadow: scrolled ? '0 20px 60px rgba(0, 0, 0, 0.2)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
       }}
     >
-      <Toolbar>
+      <Toolbar
+        sx={{
+          maxWidth: '1200px',
+          width: '100%',
+          mx: 'auto',
+          px: { xs: 2, md: 3 },
+          minHeight: '76px',
+        }}
+      >
         <Typography
           variant="h6"
           component={motion.div}
@@ -89,7 +98,8 @@ const Navbar = () => {
             flexGrow: 1,
             cursor: 'pointer',
             fontWeight: 'bold',
-            background: 'linear-gradient(45deg, #2196f3 30%, #21CBF3 90%)',
+            letterSpacing: '0.08em',
+            background: 'linear-gradient(120deg, #f4f7fb 10%, #6ee7d8 55%, #f59e0b 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}
@@ -115,8 +125,12 @@ const Navbar = () => {
                 color="inherit"
                 onClick={() => scrollToSection(item.id)}
                 sx={{
+                  px: 1.75,
+                  borderRadius: '999px',
+                  color: 'rgba(244,247,251,0.82)',
                   '&:hover': {
-                    background: 'rgba(255, 255, 255, 0.1)',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    color: '#fff',
                   },
                 }}
               >
