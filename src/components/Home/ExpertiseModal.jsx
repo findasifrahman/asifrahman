@@ -43,7 +43,7 @@ const ProjectCard = ({ image, title, redirectUrl, skills, details }) => {
         onClick={() => redirectUrl && window.open(redirectUrl, '_blank')}
       >
         {image && (
-          <Box sx={{ position: 'relative', height: 220, overflow: 'hidden' }}>
+          <Box sx={{ position: 'relative', height: 220, overflow: 'hidden', backgroundColor: 'rgba(255,255,255,0.03)', p: 1.5 }}>
             <CardMedia
               component="img"
               image={image}
@@ -51,8 +51,9 @@ const ProjectCard = ({ image, title, redirectUrl, skills, details }) => {
               sx={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
+                objectFit: title.toLowerCase().includes('pcb') || title.toLowerCase().includes('zynq') || title.toLowerCase().includes('fpga') ? 'contain' : 'cover',
                 transition: 'transform 0.35s ease',
+                borderRadius: '16px',
                 '&:hover': {
                   transform: 'scale(1.04)',
                 },
@@ -61,8 +62,9 @@ const ProjectCard = ({ image, title, redirectUrl, skills, details }) => {
             <Box
               sx={{
                 position: 'absolute',
-                inset: 0,
+                inset: 6,
                 background: 'linear-gradient(180deg, rgba(7,17,31,0.02) 0%, rgba(7,17,31,0.68) 100%)',
+                borderRadius: '16px',
               }}
             />
           </Box>
